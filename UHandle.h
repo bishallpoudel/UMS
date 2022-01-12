@@ -11,13 +11,15 @@ class User{
     string phone;
     string gender;
     string old_name;
+    string file_path;
+    string tim;
 
     public:
     // Set default constructor
     User(){}
 
     // Make a constructor to accept parameters
-    User(string name, string email, string address, string phone, string gender);
+    User(string name, string email, string address, string phone, string gender, string file_path);
 
     bool addUser();
 
@@ -37,13 +39,14 @@ class User{
 
 // Make a constructor to accept parameters
 // Data from front-end comes here
-User::User(string name, string email, string address, string phone, string gender){
+User::User(string name, string email, string address, string phone, string gender, string file_path){
     // Assigining values to object
     this->name = name;
     this->email = email;
     this->address = address;
     this->phone = phone;
     this->gender = gender;
+    this->file_path = file_path;
     // std::cout<<name;
     // Also generate id here
     // Making string of year
@@ -59,8 +62,14 @@ User::User(string name, string email, string address, string phone, string gende
     int n = 1000 +num +2;
     // cout<<n<<endl;
     
-    // Concatinate two string
+    // Concatinate two string to make id
     this->id = stryear + to_string(n);
+
+    // For added time
+    char time[20];
+    strftime(time, sizeof(time), "%y/%m/%d-%X", localtime(&now));
+    this->tim = string(time);
+
         // cout<<"ID = "<<id<<endl;
         // cout<<"Name = "<<name<<endl;
         // cout<<"Email = "<<email<<endl;
@@ -97,7 +106,7 @@ bool User::updateUser(string old_name){
     // Open, send request and close DB
     // Update name with new infos in db
     SQLite sqldb;
-    success = sqldb.updateRow(old_name.c_str(), name.c_str(), email.c_str(), address.c_str(), phone.c_str(), gender.c_str());
+    success = sqldb.updateRow(old_name.c_str(), name.c_str(), email.c_str(), address.c_str(), phone.c_str(), gender.c_str(), file_path.c_str());
     sqldb.closeDB();
     return success;
 }
@@ -149,7 +158,7 @@ bool User::addUser(){
     SQLite sqldb;
     if(sqldb.createTable()){
 
-        success = sqldb.insertData(id.c_str(), name.c_str(), email.c_str(), address.c_str(), phone.c_str(), gender.c_str());
+        success = sqldb.insertData(id.c_str(), name.c_str(), email.c_str(), address.c_str(), phone.c_str(), gender.c_str(), file_path.c_str(), tim.c_str());
     }
     sqldb.closeDB();
     return success;
