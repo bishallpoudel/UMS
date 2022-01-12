@@ -1,8 +1,7 @@
-// #include "User.h"
+#include "UHandle.h"
 #include <wx/image.h>
 #include <wx/valnum.h>
 #include "userdialog.h"
-#include "UHandle.h"
 
 userDialog::userDialog(const wxString& Title, wxWindow* parent)
            : wxDialog(parent, -1, Title, wxDefaultPosition, wxSize(530,500)){
@@ -173,11 +172,7 @@ void userDialog::onAddUser(wxCommandEvent& event){
  }  
 // Informs the user that if everything goes well a new user will be added
  wxMessageDialog* dialog = new wxMessageDialog(this, wxT("A new user will be added"), wxT("Confirm"), wxOK | wxCANCEL);
-
-//  std::cout<<"Test"<<endl;
-
  if(dialog->ShowModal() == wxID_OK){
-  //  cout<<"Enter ok"<<endl;
   /*
     TODO: 1. Call the User's C'tor to create a new user
           2. Add the new data to the file
@@ -185,27 +180,37 @@ void userDialog::onAddUser(wxCommandEvent& event){
           4. Informs the user that a user has been successfully added to the file
           5. Clear all the input field
   */
-  //*conversion from wxString to string
-    std::string name = std::string(name_text->GetLineText(0).mb_str());
-    std::string email =  std::string(email_text->GetLineText(0).mb_str());
-    std::string address = std::string(address_text->GetLineText(0).mb_str());
-    std::string phone = std::string(phone_text->GetLineText(0).mb_str());
-    std::string gender = "male";
-   
+//*conversion from wxString to string
+  std::string name = std::string(name_text->GetLineText(0).mb_str());
+  std::string email =  std::string(email_text->GetLineText(0).mb_str());
+  std::string address = std::string(address_text->GetLineText(0).mb_str());
+  std::string phone = std::string(phone_text->GetLineText(0).mb_str());
+  std::string gender;
+  
+  if(gen_male -> GetValue()){
+   gender = "male";
+  }
+  else if(gen_female -> GetValue()){
+    gender = "female";
+ }
+  else
+   gender = "other";
+
+   string file = string(file_path.mb_str());
+
 
  //call the function to add to the database
-
  // First call the constructor of User class
-  User usr(name, email, address, phone, gender);
+ User *user = new User(name, email, address, phone, gender, file);
  
  // this call should return a success or failure message 
-  bool success = usr.addUser();
+  bool success = user->addUser();
 
   // std::cout<<success<<endl;
     // cout<<"Success....."<<endl;
    if(!success){
     
-   wxMessageDialog* warning = new wxMessageDialog(this, "Cannot add User", "Error", wxOK);
+   wxMessageDialog* warning = new wxMessageDialog(this, "Cannot add User", "Error", wxOK | wxICON_ERROR);
    if(warning->ShowModal() == wxID_OK)
      return;
   }
@@ -231,7 +236,7 @@ void userDialog::onSelectImage(wxCommandEvent& event){
  
    wxFileDialog* selectFile = new wxFileDialog(this, "Select an Image","","", "`PNG and JPEG files (*.png; *jpg)|*.png;*.jpg");
   if(selectFile->ShowModal() == 5100){
-     wxString file_path = selectFile->GetPath();
+      file_path = selectFile->GetPath();
     
 
   //Provides the preview selected image feature
