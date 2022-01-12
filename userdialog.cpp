@@ -1,4 +1,4 @@
-#include "UHandle.h"
+#include "uhandle.h"
 #include <wx/image.h>
 #include <wx/valnum.h>
 #include "userdialog.h"
@@ -201,13 +201,11 @@ void userDialog::onAddUser(wxCommandEvent& event){
 
  //call the function to add to the database
  // First call the constructor of User class
- User *user = new User(name, email, address, phone, gender, file);
+ User *userss = new User(name, email, address, phone, gender, file);
  
  // this call should return a success or failure message 
-  bool success = user->addUser();
+  bool success = userss->addUser();
 
-  // std::cout<<success<<endl;
-    // cout<<"Success....."<<endl;
    if(!success){
     
    wxMessageDialog* warning = new wxMessageDialog(this, "Cannot add User", "Error", wxOK | wxICON_ERROR);

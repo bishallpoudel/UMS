@@ -27,10 +27,10 @@ optionFrame::optionFrame()
   wxStaticBitmap* banner = new wxStaticBitmap(this, wxID_ANY, image);
 
   // Buttons 
-  wxButton* addUser = new wxButton(this, 5, "Add User", wxDefaultPosition, wxSize(400, 70));
-  wxButton* deleteUser = new wxButton(this, 6, "Delete  User", wxDefaultPosition, wxSize(400, 70));
-  wxButton* searchUser = new wxButton(this, 7, "Search  User", wxDefaultPosition, wxSize(400, 70));
-  wxButton* updateUser = new wxButton(this, 8, "Update  User", wxDefaultPosition, wxSize(400,70)); 
+  wxButton* add_User = new wxButton(this, 5, "Add User", wxDefaultPosition, wxSize(400, 70));
+  wxButton* delete_User = new wxButton(this, 6, "Delete  User", wxDefaultPosition, wxSize(400, 70));
+  wxButton* search_User = new wxButton(this, 7, "Search  User", wxDefaultPosition, wxSize(400, 70));
+  wxButton* update_User = new wxButton(this, 8, "Update  User", wxDefaultPosition, wxSize(400,70)); 
   wxButton* exit = new wxButton(this, 9, "Exit", wxDefaultPosition, wxSize(400,70));
 
   wxBitmapButton* add_user = new wxBitmapButton(this, 5, add_icon, wxDefaultPosition, wxSize(120,120));
@@ -49,10 +49,10 @@ optionFrame::optionFrame()
  // Center the button in the frame 
   option_sizer->Add(banner, 1, wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);
   
-  option_sizer->Add(addUser, 0,  wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);
-  option_sizer->Add(updateUser, 0, wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);
-  option_sizer->Add(deleteUser, 0, wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);  
-  option_sizer->Add(searchUser, 0, wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);
+  option_sizer->Add(add_User, 0,  wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);
+  option_sizer->Add(update_User, 0, wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);
+  option_sizer->Add(delete_User, 0, wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);  
+  option_sizer->Add(search_User, 0, wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);
   option_sizer->Add(exit, 0, wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);
   
   option_sizer->Add(icon_sizer, 1, wxALIGN_CENTER | wxALIGN_CENTER_HORIZONTAL);
