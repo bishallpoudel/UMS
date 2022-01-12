@@ -13,10 +13,12 @@ class RData{
     char* address;
     char* phone;
     char* gender;
+    char* file_path;
+    char* tim;
 
     public:
 
-    void append(char* i, char* n, char* e, char* a, char* p, char* g){
+    void append(char* i, char* n, char* e, char* a, char* p, char* g, char* f, char* t){
         // cout<<"ID = "<<i<<endl;
         // cout<<"Name = "<<n<<endl;
         // cout<<"Email = "<<e<<endl;
@@ -41,6 +43,12 @@ class RData{
 
         gender = new char[strlen(g)+1];
         strcpy(gender, g);
+
+        file_path = new char[strlen(f)+1];
+        strcpy(file_path, f);
+
+        tim = new char[strlen(t)+1];
+        strcpy(tim, t);
     }
     void callbacks(int argc, char **argv, char **azColName){
 
@@ -62,6 +70,12 @@ class RData{
 
         gender = new char[strlen(argv[5]) + 1];
         strcpy(gender, argv[5]);
+
+        file_path = new char[strlen(argv[6])+1];
+        strcpy(file_path, argv[6]);
+
+        tim = new char[strlen(argv[7])+1];
+        strcpy(tim, argv[7]);
 
     }
     // void display(){
@@ -114,7 +128,7 @@ class SQLite{
     bool createTable();
 
     // Insert data into table
-    bool insertData(const char* id, const char* name, const char* email, const char* address, const char* phone, const char* gender);
+    bool insertData(const char* id, const char* name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path, const char* tim);
 
     // Display all the data of table
     RData displayTable();
@@ -126,7 +140,7 @@ class SQLite{
     bool removeRow(const char* name);
 
     // Update the specific user
-    bool updateRow(const char* name,const char* new_name, const char* email, const char* address, const char* phone, const char* gender);
+    bool updateRow(const char* name,const char* new_name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path);
 
     int returnNoOfRow();
 
@@ -191,12 +205,12 @@ int SQLite::returnNoOfRow(){
 }
 
 // Update a row by its name
-bool SQLite::updateRow(const char* name,const char* new_name, const char* email, const char* address, const char* phone, const char* gender){
+bool SQLite::updateRow(const char* name, const char* new_name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path){
     // SQL command
     char * query = NULL;
     bool success=true;
 
-    asprintf(&query, "UPDATE USERS SET NAME='%s', EMAIL='%s', ADDRESS='%s', PHONE='%s' GENDER='%s' WHERE NAME='%s';", new_name, email, address, phone, gender, name);
+    asprintf(&query, "UPDATE USERS SET NAME='%s', EMAIL='%s', ADDRESS='%s', PHONE='%s' GENDER='%s' IMAGE='%s' WHERE NAME='%s';", new_name, email, address, phone, gender, name, file_path);
 
     // cout<<"Query = "<<query<<endl;
 
@@ -274,13 +288,13 @@ RData SQLite::displayTable(){
 }
 
 // Insert al the data into table
-bool SQLite::insertData(const char* id, const char* name, const char* email, const char* address, const char* phone, const char* gender){
+bool SQLite::insertData(const char* id, const char* name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path, const char* tim){
     // SQL query
     char * query = NULL;
     bool success=true;
 
     // Making single string of command and asign into query
-    asprintf(&query, "INSERT INTO USERS(ID, NAME, EMAIL, ADDRESS, PHONE, GENDER) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');", id, name, email, address, phone, gender);
+    asprintf(&query, "INSERT INTO USERS(ID, NAME, EMAIL, ADDRESS, PHONE, GENDER, IMAGE, TIME) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');", id, name, email, address, phone, gender, file_path, tim);
     // cout<<"query = "<<query<<endl;
 
     // Prepere the query
@@ -313,7 +327,9 @@ bool SQLite::createTable(){
             "EMAIL TEXT NOT NULL UNIQUE, "
             "ADDRESS TEXT NOT NULL, "
             "PHONE CHAR(15) NOT NULL UNIQUE, "
-            "GENDER CHAR(7) NOT NULL);";
+            "GENDER CHAR(7) NOT NULL, "
+            "IMAGE TEXT NOT NULL, "
+            "TIME CHAR(20) NOT NULL);";
     // cout<<"SQL = "<<sql<<endl;
     // Run the sql
     rOpening = sqlite3_exec(db, sql, callback, 0, &aErrMsg);
@@ -391,8 +407,14 @@ int SQLite::callbackAll(void *fArg, int argc, char **argv, char **azColName){
         char* gender = new char[strlen(argv[5]) + 1];
         strcpy(gender, argv[5]);
 
-        rdatas[user_count].append(id, name, email, address, phone, gender);
-        rd->append(id, name, email, address, phone, gender);
+        char* file_path = new char[strlen(argv[6])+1];
+        strcpy(file_path, argv[6]);
+
+        char* tim = new char[strlen(argv[7])+1];
+        strcpy(tim, argv[7]);
+
+        rdatas[user_count].append(id, name, email, address, phone, gender, file_path, tim);
+        rd->append(id, name, email, address, phone, gender, file_path, tim);
 
         delete [] id;
         delete [] name;
@@ -400,6 +422,8 @@ int SQLite::callbackAll(void *fArg, int argc, char **argv, char **azColName){
         delete [] address;
         delete [] phone;
         delete [] gender;
+        delete [] file_path;
+        delete [] tim;
 
     ++user_count;
     // cout<<count<<endl;
