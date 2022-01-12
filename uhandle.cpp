@@ -1,41 +1,4 @@
-#include "SQLite.h"
-#include<time.h>
-class User;
-
-class User{
-    // User Informations
-    string id;
-    string name;
-    string email;
-    string address;
-    string phone;
-    string gender;
-    string old_name;
-    string file_path;
-    string tim;
-
-    public:
-    // Set default constructor
-    User(){}
-
-    // Make a constructor to accept parameters
-    User(string name, string email, string address, string phone, string gender, string file_path);
-
-    bool addUser();
-
-    RData* displayAllUser();
-
-    RData displayUser(string name);
-
-    bool removeUser(string name);
-
-    bool updateUser(string old_name);
-
-    int rowNumber();
-
-    bool isPresent(string name);
-
-};
+#include "uhandle.h"
 
 // Make a constructor to accept parameters
 // Data from front-end comes here
@@ -140,14 +103,14 @@ RData* User::displayAllUser(){
     int row_num = rowNumber();
     SQLite sqldb;
     // Declearing object to return data
-    rdatas = new RData[row_num * sizeof(RData)];
-    RData rdta;
-    rdta = sqldb.displayTable();
+    RData *rdta;
+    rdta = new RData[row_num * sizeof(RData)];
+    *rdta = sqldb.displayTable();
     // cout<<sqldb.returnNoOfRow()<<endl;
     // cout<<"in uhandle"<<endl;
     // (rdta )->display();
     sqldb.closeDB();
-    return rdatas;
+    return rdta;
 }
 
 // Adding user into DB

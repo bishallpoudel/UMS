@@ -1,24 +1,6 @@
-# include <iostream>
-#include<string.h>
-#include<sqlite3.h>
-// #include<vector>
-using namespace std;
-class SQLite;
-class RData;
+# include "sqlite.h"
 
-class RData{
-    char* id;
-    char* name;
-    char* email;
-    char* address;
-    char* phone;
-    char* gender;
-    char* file_path;
-    char* tim;
-
-    public:
-
-    void append(char* i, char* n, char* e, char* a, char* p, char* g, char* f, char* t){
+void RData::append(char* i, char* n, char* e, char* a, char* p, char* g, char* f, char* t){
         // cout<<"ID = "<<i<<endl;
         // cout<<"Name = "<<n<<endl;
         // cout<<"Email = "<<e<<endl;
@@ -50,7 +32,8 @@ class RData{
         tim = new char[strlen(t)+1];
         strcpy(tim, t);
     }
-    void callbacks(int argc, char **argv, char **azColName){
+
+    void RData::callbacks(int argc, char **argv, char **azColName){
 
         // Assigning returinng data into object variable
         id = new char[strlen(argv[0]) + 1];
@@ -78,82 +61,8 @@ class RData{
         strcpy(tim, argv[7]);
 
     }
-    // void display(){
-    //     // cout<<"from main"<<endl;
-    //     cout<<"ID = "<<id<<endl;
-    //     cout<<"Name = "<<name<<endl;
-    //     cout<<"Email = "<<email<<endl;
-    //     cout<<"Address = "<<address<<endl;
-    //     cout<<"Phone = "<<phone<<endl;
-    //     cout<<"Gender = "<<gender<<endl;
-    //     cout<<endl;
-    // }
-};
+// RData *rdatas;
 
-class SQLite{
-    // Pointer to SQLite connection
-    sqlite3 *db;
-    // Error message
-    char *aErrMsg;
-    // Result of the opening file
-    int rOpening;
-    // SQL command
-    const char *sql;
-    // Compile sqlite statement
-    sqlite3_stmt *stmt;
-
-    // Callback function, It contains result of sql statement
-    static int callbackAll(void *fArg, int argc, char **argv, char **azColName);
-
-    static int callback(void *fArg, int argc, char **argv, char **azColName);
-
-    // Callback function for returning no of row
-    static int numback(void *nrow, int argc, char **argv, char **azColName);
-
-    // Callback function to return user presence in DB
-    static int isPresent(void *status, int argc, char **argv, char **azColName);
-
-    // Checking for error if any
-    void checkDBError();
-
-    public:
-
-    // Open DB when creating an object
-    SQLite();
-
-    // Closing the connection
-    void closeDB();
-
-    // Creating DB table
-    bool createTable();
-
-    // Insert data into table
-    bool insertData(const char* id, const char* name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path, const char* tim);
-
-    // Display all the data of table
-    RData displayTable();
-
-    // Display specific data
-    RData displayRow(const char* name);
-
-    // Remove the specific user
-    bool removeRow(const char* name);
-
-    // Update the specific user
-    bool updateRow(const char* name,const char* new_name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path);
-
-    int returnNoOfRow();
-
-    bool searchRow(const char* name);
-
-    // void drdata(){
-    //     for(int i=0; i<10; i++)
-    //         rdatas[i].display();
-    // }
-};
-
-RData *rdatas;
-static int user_count = 0;
 
 // Return either name is in DB or not
 bool SQLite::searchRow(const char* name){
@@ -413,7 +322,7 @@ int SQLite::callbackAll(void *fArg, int argc, char **argv, char **azColName){
         char* tim = new char[strlen(argv[7])+1];
         strcpy(tim, argv[7]);
 
-        rdatas[user_count].append(id, name, email, address, phone, gender, file_path, tim);
+        // rdatas[user_count].append(id, name, email, address, phone, gender, file_path, tim);
         rd->append(id, name, email, address, phone, gender, file_path, tim);
 
         delete [] id;
