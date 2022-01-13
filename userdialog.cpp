@@ -188,15 +188,19 @@ void userDialog::onAddUser(wxCommandEvent& event){
   std::string gender;
   
   if(gen_male -> GetValue()){
-   gender = "male";
+   gender = "Male";
   }
   else if(gen_female -> GetValue()){
-    gender = "female";
+    gender = "Female";
  }
   else
-   gender = "other";
+   gender = "Other";
 
-   string file = string(file_path.mb_str());
+  string file;
+  if(strlen(file_path)>0)
+   file = string(file_path.mb_str());
+  else
+    file = "./media/default_pp.jpg";
 
 
  //call the function to add to the database
@@ -208,7 +212,7 @@ void userDialog::onAddUser(wxCommandEvent& event){
 
    if(!success){
     
-   wxMessageDialog* warning = new wxMessageDialog(this, "Cannot add User", "Error", wxOK | wxICON_ERROR);
+   wxMessageDialog* warning = new wxMessageDialog(this, "Cannot add User, May this User is Already Exists.", "Error", wxOK | wxICON_ERROR);
    if(warning->ShowModal() == wxID_OK)
      return;
   }
