@@ -11,7 +11,7 @@ wxWidgets can be installed from - [here](https://docs.wxwidgets.org/trunk/overvi
 For Linux based operating system:
 
  ```
- g++ `wx-config --cxxflags` -o myapp *.cpp `wx-config --libs`
+ g++ `wx-config --cxxflags` -o myapp *.cpp `wx-config --libs` -l sqlite3
  
  ```
 # Running the program
