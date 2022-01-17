@@ -19,11 +19,18 @@ User::User(string name, string email, string address, string phone, string gende
     string stryear (year);
 
     // Getting user number from table
-    User usr;
-    int num = usr.rowNumber();
+    int num = rowNumber();
+    RData rd = displayAllUser();
     // cout<<num<<endl;
-    int n = 1000 +num +2;
+    int n;
+    if(num >= 1){
+        char * last = rd.id + (strlen(rd.id) - 4);
+        n = atoi(last) +1;
+    }
+    else
+    n = 1000 +num +1;
     // cout<<n<<endl;
+
     
     // Concatinate two string to make id
     this->id = stryear + to_string(n);
@@ -98,14 +105,14 @@ RData User::displayUser(string name){
 }
 
 // Display all the users from DB
-RData* User::displayAllUser(){
+RData User::displayAllUser(){
     // Opening, requesting and closing DB
     int row_num = rowNumber();
     SQLite sqldb;
     // Declearing object to return data
-    RData *rdta;
-    rdta = new RData[row_num * sizeof(RData)];
-    *rdta = sqldb.displayTable();
+    RData rdta;
+    // rdta = new RData[row_num * sizeof(RData)];
+    rdta = sqldb.displayTable();
     // cout<<sqldb.returnNoOfRow()<<endl;
     // cout<<"in uhandle"<<endl;
     // (rdta )->display();

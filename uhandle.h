@@ -25,7 +25,7 @@ class User{
 
     bool addUser();
 
-    RData* displayAllUser();
+    RData displayAllUser();
 
     RData displayUser(string name);
 

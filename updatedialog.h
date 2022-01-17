@@ -20,7 +20,7 @@
 
 class updateDialog : public userDialog{
 
-virtual void onBtnClick(wxCommandEvent& event);
+void onBtnClick(wxCommandEvent& event);
 void onCancel(wxCommandEvent& event);
 
  public:

@@ -23,9 +23,10 @@ void deleteFrame :: onButtonClick(wxCommandEvent& event){
   
    if(!available){
      
-     wxMessageDialog* message = new wxMessageDialog(this, "User Not found","Not Found", wxOK | wxCANCEL);
+     wxMessageDialog* message = new wxMessageDialog(this, "User Not found","Not Found", wxOK);
       if(message -> ShowModal () == wxID_OK)
-         Destroy();   
+         message->Destroy();
+         return;   
   
    }
 

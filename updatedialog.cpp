@@ -9,19 +9,19 @@ updateDialog :: updateDialog(wxWindow* parent, wxString title ,RData& user)
  email_text->ChangeValue(user.email);
  phone_text->ChangeValue(user.phone);
  address_text->ChangeValue(user.address);
-
- if(user.gender == "Female"){
+ 
+ if(string(user.gender) == "Female"){
    gen_male->SetValue(false);
    gen_others->SetValue(false);
    gen_female->SetValue(true);
  }
- else if(user.gender == "Others"){
+ else if(string(user.gender) == "Others"){
    gen_male->SetValue(false);
    gen_female->SetValue(false);
    gen_others->SetValue(true);
 
  }
- else {
+ else if(string(user.gender) == "Male"){
    
     gen_female->SetValue(false);
     gen_others->SetValue(false);
