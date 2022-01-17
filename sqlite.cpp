@@ -114,12 +114,12 @@ int SQLite::returnNoOfRow(){
 }
 
 // Update a row by its name
-bool SQLite::updateRow(const char* name, const char* new_name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path){
+bool SQLite::updateRow(const char* id, const char* name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path){
     // SQL command
     char * query = NULL;
     bool success=true;
 
-    asprintf(&query, "UPDATE USERS SET NAME='%s', EMAIL='%s', ADDRESS='%s', PHONE='%s' GENDER='%s' IMAGE='%s' WHERE NAME='%s';", new_name, email, address, phone, gender, name, file_path);
+    asprintf(&query, "UPDATE USERS SET NAME='%s', EMAIL='%s', ADDRESS='%s', PHONE='%s', GENDER='%s', IMAGE='%s' WHERE ID='%s';", name, email, address, phone, gender, file_path, id);
 
     // cout<<"Query = "<<query<<endl;
 

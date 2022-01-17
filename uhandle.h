@@ -13,7 +13,6 @@ class User{
     string address;
     string phone;
     string gender;
-    string old_name;
     string file_path;
     string tim;
 
@@ -32,7 +31,7 @@ class User{
 
     bool removeUser(string name);
 
-    bool updateUser(string old_name);
+    bool updateUser(string id);
 
     int rowNumber();
 

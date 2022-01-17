@@ -61,15 +61,15 @@ int User::rowNumber(){
 }
 
 // Updating user 
-bool User::updateUser(string old_name){
+bool User::updateUser(string id){
     // Asssigning values
-    this->old_name = old_name;
+    this->id = id;
     bool success;
 
     // Open, send request and close DB
     // Update name with new infos in db
     SQLite sqldb;
-    success = sqldb.updateRow(old_name.c_str(), name.c_str(), email.c_str(), address.c_str(), phone.c_str(), gender.c_str(), file_path.c_str());
+    success = sqldb.updateRow(id.c_str(), name.c_str(), email.c_str(), address.c_str(), phone.c_str(), gender.c_str(), file_path.c_str());
     sqldb.closeDB();
     return success;
 }

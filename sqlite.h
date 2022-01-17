@@ -87,7 +87,7 @@ class SQLite{
     bool removeRow(const char* name);
 
     // Update the specific user
-    bool updateRow(const char* name,const char* new_name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path);
+    bool updateRow(const char* id,const char* name, const char* email, const char* address, const char* phone, const char* gender, const char* file_path);
 
     int returnNoOfRow();
 
