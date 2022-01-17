@@ -1,10 +1,10 @@
 #include "updatedialog.h"
 
-string old_name;
+string ID;
 //TODO:Change the third parameter to the object of type equivalent to testUser 
 updateDialog :: updateDialog(wxWindow* parent, wxString title ,RData& user)
               : userDialog(title, parent){
-old_name = user.name;
+ ID = user.id;
  name_text->ChangeValue(user.name);
  email_text->ChangeValue(user.email);
  phone_text->ChangeValue(user.phone);
@@ -111,7 +111,7 @@ void updateDialog:: onBtnClick(wxCommandEvent& event){
         //  TODO:1.Call the updateUser function and pass above data
 
           User usr(name, email, address, phone, gender, file);
-         bool success = usr.updateUser(old_name);
+         bool success = usr.updateUser(ID);
           
            if(!success){
              wxMessageDialog* message = new wxMessageDialog(this, "User cannot be updated", "Error", wxOK | wxICON_ERROR);
